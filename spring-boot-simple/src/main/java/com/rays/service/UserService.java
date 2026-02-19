@@ -7,45 +7,43 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rays.dao.RoleDAO;
+import com.rays.dao.UserDAO;
 import com.rays.dto.RoleDTO;
+import com.rays.dto.UserDTO;
 
 @Service
 @Transactional
-public class RoleService {
+public class UserService {
 
 	@Autowired
-	public RoleDAO roleDao;;
+	UserDAO dao;
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public long add(RoleDTO dto) {
-		long pk = roleDao.add(dto);
+	public long add(UserDTO dto) {
+		long pk = dao.add(dto);
 		return pk;
 
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void update(RoleDTO dto) {
-		roleDao.update(dto);
-
+	public void delete(long id) {
+		UserDTO dto = dao.findByPk(id);
+		dao.delete(dto);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void delete(long id) {
-
-		RoleDTO dto = roleDao.findByPk(id);
-		roleDao.delete(dto);
+	public void update(UserDTO dto) {
+		dao.update(dto);
 	}
 
 	@Transactional(readOnly = true)
-	public RoleDTO findByPk(long pk) {
-		return roleDao.findByPk(pk);
-
+	public UserDTO findByPk(long pk) {
+		return dao.findByPk(pk);
 	}
 
 	@Transactional(readOnly = true)
-	public List<RoleDTO> search(RoleDTO dto, int pageNo, int pageSize) {
-		return roleDao.search(dto, pageNo, pageSize);
+	public List<UserDTO> search(UserDTO dto, int pageNo, int pageSize) {
+		return dao.search(dto, pageNo, pageSize);
 	}
 
 }
