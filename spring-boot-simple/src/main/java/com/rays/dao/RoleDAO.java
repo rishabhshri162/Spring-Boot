@@ -1,5 +1,6 @@
 package com.rays.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
@@ -45,19 +47,25 @@ public class RoleDAO {
 
 		List<RoleDTO> list = null;
 
-		
 		// CriteriaBuilder: Query banane ke liye use karte hai
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
-		
 		// CriteriaQuery: batata hai ki query kis type ka result degi (RoleDTO)
 		CriteriaQuery<RoleDTO> cq = builder.createQuery(RoleDTO.class);
 
-		
+		List<Predicate> pList = new ArrayList<Predicate>();
+
 		// Root: entity class ko represent karta hai (FROM RoleDTO)
 		Root<RoleDTO> root = cq.from(RoleDTO.class);
+		if (dto != null) {
+			if (dto.getName() != null && dto.getName().length() > 0) {
+				pList.add(builder.like(root.get("name"), dto.getName() + "%"));
 
-		cq.select(root);
+			}
+
+		}
+
+		cq.where(pList.toArray(new Predicate[pList.size()]));
 
 		// EntityManager se select ki actual query create ho rahi hai
 		TypedQuery<RoleDTO> tquery = entityManager.createQuery(cq);

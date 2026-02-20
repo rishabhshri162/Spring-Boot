@@ -38,13 +38,7 @@ public class UserCtl extends BaseCtl {
 
 		}
 
-		UserDTO dto = new UserDTO();
-		dto.setFirstName(form.getFirstName());
-		dto.setLastName(form.getLastName());
-		dto.setLoginId(form.getLoginId());
-		dto.setPassword(form.getPassword());
-		dto.setDob(form.getDob());
-		dto.setRoleId(form.getRoleId());
+		UserDTO dto = (UserDTO) form.getDto();
 
 		userService.add(dto);
 
@@ -66,14 +60,8 @@ public class UserCtl extends BaseCtl {
 
 		}
 
-		UserDTO dto = new UserDTO();
-		dto.setId(form.getId());
-		dto.setFirstName(form.getFirstName());
-		dto.setLastName(form.getLastName());
-		dto.setLoginId(form.getLoginId());
-		dto.setPassword(form.getPassword());
-		dto.setDob(form.getDob());
-		dto.setRoleId(form.getRoleId());
+
+		UserDTO dto = (UserDTO) form.getDto();
 
 		userService.update(dto);
 
@@ -120,7 +108,7 @@ public class UserCtl extends BaseCtl {
 
 	}
 
-	@RequestMapping(value = "/search{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/search/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
 	public ORSResponse search(@RequestBody UserForm form ,@PathVariable(required = false) int pageNo) {
 
 		ORSResponse res = new ORSResponse();
@@ -128,6 +116,8 @@ public class UserCtl extends BaseCtl {
 		int pageSize = 5;
 
 		UserDTO dto = new UserDTO();
+		
+		dto = (UserDTO) form.getDto();
 
 		List<UserDTO> list = userService.search(dto, pageNo, pageSize);
 

@@ -78,6 +78,19 @@ public class UserForm extends BaseForm {
 		this.roleId = roleId;
 	}
 
+	@Override
+	public BaseDTO getDto() {
+		UserDTO dto = new UserDTO();
+		dto = (UserDTO) initDTO(dto);
+		dto.setFirstName(firstName);
+		dto.setLastName(lastName);
+		dto.setLoginId(loginId);
+		dto.setPassword(password);
+		dto.setDob(dob);
+		dto.setRoleId(roleId);
+		
+		return dto;
+	}
 	
 
 }
