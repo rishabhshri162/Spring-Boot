@@ -26,7 +26,6 @@ public class UserDAO {
 
 	@Autowired
 	RoleDAO roleDao;
-	
 
 	public void populate(UserDTO dto) {
 		if (dto.getRoleId() != null && dto.getRoleId() > 0) {
@@ -56,6 +55,36 @@ public class UserDAO {
 		return dto;
 	}
 
+	public UserDTO findByUniqueKey(String attribute, String value) {
+
+		List<UserDTO> list = null;
+
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<UserDTO> cq = builder.createQuery(UserDTO.class);
+
+		Root<UserDTO> qRoot = cq.from(UserDTO.class);
+
+		Predicate condition = builder.equal(qRoot.get(attribute), value);
+
+		cq.where(condition);
+
+		TypedQuery<UserDTO> tq = entityManager.createQuery(cq);
+
+		list = tq.getResultList();
+
+		
+		UserDTO dto = null;
+
+		if (list.size() > 0) {
+
+			dto = list.get(0);
+
+		}
+
+		return dto;
+	}
+
 	public List<UserDTO> search(UserDTO dto, int pageNo, int pageSize) {
 
 		List<UserDTO> list = null;
@@ -66,22 +95,20 @@ public class UserDAO {
 
 		List<Predicate> pList = new ArrayList<Predicate>();
 
-		Root<UserDTO> root = cq.from(UserDTO.class);
+		Root<UserDTO> qroot = cq.from(UserDTO.class);
 
 		if (dto != null) {
 			if (dto.getFirstName() != null && dto.getFirstName().length() > 0) {
-				pList.add(builder.like(root.get("firstName"), dto.getFirstName() + "%"));
+				pList.add(builder.like(qroot.get("firstName"), dto.getFirstName() + "%"));
 
 			}
 			if (dto.getLastName() != null && dto.getLastName().length() > 0) {
-				pList.add(builder.like(root.get("lastName"), dto.getLastName() + "%"));
+				pList.add(builder.like(qroot.get("lastName"), dto.getLastName() + "%"));
 
 			}
 
 		}
 		cq.where(pList.toArray(new Predicate[pList.size()]));
-
-//		cq.select(root);
 
 		TypedQuery<UserDTO> tquery = entityManager.createQuery(cq);
 

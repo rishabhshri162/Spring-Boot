@@ -55,6 +55,11 @@ public class CollegeDTO extends BaseDTO{
 	public void setPhone_no(String phone_no) {
 		this.phone_no = phone_no;
 	}
+	@Override
+	public String getValue() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 	

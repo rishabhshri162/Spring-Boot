@@ -75,6 +75,12 @@ public class MarksheetDTO extends BaseDTO{
 	public void setMaths(Integer maths) {
 		this.maths = maths;
 	}
+
+	@Override
+	public String getValue() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

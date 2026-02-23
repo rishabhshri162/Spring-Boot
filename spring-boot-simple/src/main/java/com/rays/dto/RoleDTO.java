@@ -31,6 +31,11 @@ public class RoleDTO extends BaseDTO{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String getValue() {
+		return name;
+	}
 	
 	
 

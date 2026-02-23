@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.rays.common.DropDownListInt;
 import com.rays.dao.RoleDAO;
 import com.rays.dto.RoleDTO;
 
@@ -44,7 +45,7 @@ public class RoleService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<RoleDTO> search(RoleDTO dto, int pageNo, int pageSize) {
+	public List search(RoleDTO dto, int pageNo, int pageSize) {
 		return roleDao.search(dto, pageNo, pageSize);
 	}
 
