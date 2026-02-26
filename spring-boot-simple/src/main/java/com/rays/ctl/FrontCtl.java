@@ -20,7 +20,7 @@ public class FrontCtl implements HandlerInterceptor {
 
 		if (session.getAttribute("user") == null) {
 			PrintWriter writer = response.getWriter();
-			writer.write("{error: your session has been expired}");
+			writer.write("{error: your session has been expired....}");
 			writer.close();
 			return false;
 

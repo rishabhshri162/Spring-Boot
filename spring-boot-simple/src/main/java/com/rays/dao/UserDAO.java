@@ -73,7 +73,6 @@ public class UserDAO {
 
 		list = tq.getResultList();
 
-		
 		UserDTO dto = null;
 
 		if (list.size() > 0) {
