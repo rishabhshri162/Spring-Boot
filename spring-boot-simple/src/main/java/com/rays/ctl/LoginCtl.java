@@ -37,6 +37,7 @@ public class LoginCtl extends BaseCtl {
 			return res;
 
 		}
+		
 		UserDTO dto = new UserDTO();
 
 		dto = userService.authenticate(form.getLoginId(), form.getPassword());
@@ -47,6 +48,10 @@ public class LoginCtl extends BaseCtl {
 			res.setSuccess(true);
 			res.addData(dto);
 
+		} else {
+			res.setSuccess(false);
+			res.addMessage("Invalid login id and password");
+			return res;
 		}
 
 		return res;
