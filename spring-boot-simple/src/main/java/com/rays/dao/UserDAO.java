@@ -47,6 +47,7 @@ public class UserDAO {
 	}
 
 	public void update(UserDTO dto) {
+		populate(dto);
 		entityManager.merge(dto);
 
 	}
@@ -116,6 +117,9 @@ public class UserDAO {
 			if (dto.getLastName() != null && dto.getLastName().length() > 0) {
 				pList.add(builder.like(qroot.get("lastName"), dto.getLastName() + "%"));
 
+			}
+			if (dto.getRoleId() != null && dto.getRoleId() > 0) {
+				pList.add(builder.equal(qroot.get("roleId"), dto.getRoleId()));
 			}
 
 		}
